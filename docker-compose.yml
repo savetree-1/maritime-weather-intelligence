@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # Laravel Application
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/html
+      - ./storage:/var/www/html/storage
+    environment:
+      - DB_HOST=postgres
+      - DB_DATABASE=maritime_weather
+      - DB_USERNAME=maritime_user
+      - DB_PASSWORD=maritime_pass
+      - REDIS_HOST=redis
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - maritime-network
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+    depends_on:
+      - app
+    networks:
+      - maritime-network
+
+  # PostgreSQL with PostGIS
+  postgres:
+    image: postgis/postgis:14-3.2
+    environment:
+      POSTGRES_DB: maritime_weather
+      POSTGRES_USER: maritime_user
+      POSTGRES_PASSWORD: maritime_pass
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - maritime-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - maritime-network
+
+  # Python Microservices
+  weather-service:
+    build:
+      context: ./services/weather
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_HOST=redis
+      - DB_HOST=postgres
+      - DB_DATABASE=maritime_weather
+      - DB_USERNAME=maritime_user
+      - DB_PASSWORD=maritime_pass
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - maritime-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  maritime-network:
+    driver: bridge
