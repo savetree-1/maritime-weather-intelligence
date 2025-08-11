@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Development database
+  postgres-dev:
+    image: postgis/postgis:14-3.2
+    environment:
+      POSTGRES_DB: maritime_weather_dev
+      POSTGRES_USER: maritime_dev
+      POSTGRES_PASSWORD: dev_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+
+  # Development Redis
+  redis-dev:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_dev_data:/data
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:

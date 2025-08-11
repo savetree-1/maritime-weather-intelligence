@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\WeatherController;
 use App\Http\Controllers\Api\V1\SpeedController;
 use App\Http\Controllers\Api\V1\AlertController;
+use App\Http\Controllers\Api\V1\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +37,13 @@ Route::prefix('v1')->group(function () {
         Route::post('/alerts', [AlertController::class, 'store']);
         Route::post('/alerts/{alert}/acknowledge', [AlertController::class, 'acknowledge']);
         
-        // Document processing routes (to be implemented)
-        Route::post('/docs/upload', function () {
-            return response()->json(['message' => 'Document upload endpoint - to be implemented']);
-        });
-        Route::get('/docs/status/{jobId}', function ($jobId) {
-            return response()->json(['message' => "Document status for job {$jobId} - to be implemented"]);
-        });
+        // Document processing routes
+        Route::post('/docs/upload', [DocumentController::class, 'upload']);
+        Route::get('/docs/status/{jobId}', [DocumentController::class, 'status']);
+        Route::get('/docs', [DocumentController::class, 'index']);
+        Route::get('/docs/{document}', [DocumentController::class, 'show']);
+        Route::delete('/docs/{document}', [DocumentController::class, 'destroy']);
+        Route::get('/docs/{document}/download', [DocumentController::class, 'download']);
         
     });
     

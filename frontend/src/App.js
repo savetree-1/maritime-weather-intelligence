@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import WeatherView from './pages/WeatherView';
 import RouteOptimization from './pages/RouteOptimization';
+import DocumentProcessing from './pages/DocumentProcessing';
 import Navigation from './components/Navigation';
 import './App.css';
 
@@ -18,7 +19,7 @@ function App() {
             <Route path="/weather" element={<WeatherView />} />
             <Route path="/optimization" element={<RouteOptimization />} />
             <Route path="/alerts" element={<div className="p-8 text-center">Alerts page - Coming Soon</div>} />
-            <Route path="/documents" element={<div className="p-8 text-center">Document Processing - Coming Soon</div>} />
+            <Route path="/documents" element={<DocumentProcessing />} />
           </Routes>
         </main>
       </div>
