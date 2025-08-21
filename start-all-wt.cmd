@@ -1,4 +1,4 @@
 @echo off
-wt -w 0 nt -d "%~dp0frontend" cmd /k "npm start" ^
-   ; nt -d "%~dp0backend" cmd /k "node server.js" ^
-   ; nt -d "%~dp0ml_service" cmd /k "call venv\Scripts\activate && python -m uvicorn main:app --reload --port 8000"
+wt -w 0 nt -d "%~dp0web-frontend" cmd /k "npm run dev" ^
+   ; nt -d "%~dp0api-backend" cmd /k "call venv\Scripts\activate && uvicorn main:app --reload --port 3001" ^
+   ; nt -d "%~dp0ml-engine" cmd /k "call venv\Scripts\activate && uvicorn main:app --reload --port 8000"
