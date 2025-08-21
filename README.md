@@ -32,7 +32,11 @@ A modular system for real-time and predictive maritime weather guidance, featuri
 ### 2. Backend
 - Navigate to `backend/`
 - Run `npm init -y` and install Express: `npm install express`
-- Set up PostgreSQL connection
+- Set up PostgreSQL connection:
+  - Copy `.env.example` to `.env` and fill in your database credentials.
+  - Install dependencies: `npm install pg dotenv`
+  - See `backend/db.js` for connection setup and `backend/server.js` for usage example.
+  - Test with: `node server.js` and visit `/api/test-db` to verify connection.
 
 ### 3. ML Microservice
 - Navigate to `ml_service/`
@@ -46,6 +50,45 @@ A modular system for real-time and predictive maritime weather guidance, featuri
 ### 5. Cloud & DevOps
 - Use Azure for hosting, storage, and CI/CD
 - Set up GitHub Actions for automated deployment
+
+### How to Run Each Module
+
+#### 1. Frontend (React)
+- Navigate to `frontend/`
+- Install dependencies: `npm install`
+- Start the app: `npm start`
+- Open `http://localhost:3000` in your browser
+
+#### 2. Backend (Express)
+- Navigate to `backend/`
+- Install dependencies: `npm install`
+- Start the server: `node server.js`
+- Test API: `http://localhost:3001/api/status`
+
+#### 3. ML Service (FastAPI)
+- Navigate to `ml_service/`
+- Install dependencies: `pip install -r requirements.txt`
+- Start the service: `uvicorn main:app --reload --port 8000`
+- Test API: `http://localhost:8000/api/ml-status`
+
+
+### One-Click Start (Windows Command Prompt)
+- Run `start-all.cmd` in the project root to launch all services in separate Command Prompt windows:
+  1. Frontend (React)
+  2. Backend (Express)
+  3. ML Service (FastAPI)
+- Make sure you have Node.js, Python, and Command Prompt available.
+
+### One-Click Start (Windows Terminal Tabs)
+- Run `start-all-wt.cmd` in the project root to launch all services in separate tabs in Windows Terminal:
+  1. Frontend (React)
+  2. Backend (Express)
+  3. ML Service (FastAPI)
+- Requires Windows Terminal (`wt` command) installed and available in PATH.
+- Both Windows Terminal and Command Prompt scripts now activate the Python virtual environment before starting the ML service.
+
+---
+Continuously update this README and instructions as you add features or change the setup.
 
 ## Submission Requirements (Round 1)
 - Well-structured GitHub repository
