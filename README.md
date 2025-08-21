@@ -102,3 +102,5 @@ Continuously update this README and instructions as you add features or change t
 
 ---
 For details, see `hackathon_instructions.txt` and `docs/` for architecture diagrams and API references.
+
+#BASE PROJECT DONE ON : 21-08-2025 17:54 IST
